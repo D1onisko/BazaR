@@ -1,0 +1,7 @@
+# These requirements are only necessary when developing on Dio.
+# You can check for newer versions of these dependencies using this command
+#
+
+
+django==1.7.0
+psycopg2==2.6.1
