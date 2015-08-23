@@ -1,6 +1,5 @@
 import os
 
-# Path helper
 location = lambda x: os.path.join(
     os.path.dirname(os.path.realpath(__file__)), x)
 
@@ -11,6 +10,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DEBUG = True
 TEMPLATE_DEBUG = True
 SQL_DEBUG = True
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 SECRET_KEY = '$)a7n&o80u!6y5t-+jrd3)3!%vh&shg$wqpjpxc!ar&p#!)n1a'
 
@@ -20,7 +20,7 @@ SECRET_KEY = '$)a7n&o80u!6y5t-+jrd3)3!%vh&shg$wqpjpxc!ar&p#!)n1a'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bazar',
+        'NAME': 'test',
         'USER': 'travis',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -65,7 +65,7 @@ STATICFILES_FINDERS = (
 )
 
 # ======================================================================================================================
-#                                                       TEMPLATE
+#                                                       TEMPLATES
 # ======================================================================================================================
 
 TEMPLATE_LOADERS = (
@@ -84,10 +84,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 )
 
+from src import DIO_MAIN_TEMPLATE_DIR
+TEMPLATE_DIRS = (
+    location('templates'),
+    DIO_MAIN_TEMPLATE_DIR,
+)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                                       INSTALLED_APPS / MIDDLEWARE
 # ----------------------------------------------------------------------------------------------------------------------
+
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,6 +109,11 @@ INSTALLED_APPS = [
 
 ]
 
+from src import get_core_apps
+INSTALLED_APPS = INSTALLED_APPS + get_core_apps()
+
+from src.defaults import *
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,5 +123,5 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
 
-
 )
+
