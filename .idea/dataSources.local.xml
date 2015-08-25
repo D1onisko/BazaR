@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="PostgreSQL - test@localhost" uuid="202b6db0-47c3-4459-92e6-e85cd4cba2f2">
+      <secret-storage>master_key</secret-storage>
+      <schema-pattern>bazar.*</schema-pattern>
+      <default-schemas>bazar.*</default-schemas>
+    </data-source>
+    <data-source name="PostgreSQL - bazar@localhost [2]" uuid="4a7fa8df-206b-45f7-adec-7e0267db8812">
+      <secret-storage>master_key</secret-storage>
+      <schema-pattern>bazar.*</schema-pattern>
+      <default-schemas>bazar.*</default-schemas>
+    </data-source>
+    <data-source name="PostgreSQL - test@localhost [2]" uuid="520b355e-7f8c-4ce2-846a-d4ae44ed89fe">
+      <secret-storage>master_key</secret-storage>
+      <schema-pattern>test.*</schema-pattern>
+      <default-schemas>test.*</default-schemas>
+    </data-source>
+  </component>
+</project>

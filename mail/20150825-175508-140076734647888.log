@@ -1,0 +1,71 @@
+Content-Type: multipart/alternative;
+ boundary="===============5587105775520896942=="
+MIME-Version: 1.0
+Subject: Account activation on example.com
+From: info@google.ru
+To: d1oniskozak@gmail.com
+Date: Tue, 25 Aug 2015 16:55:08 -0000
+Message-ID: <20150825165508.4050.37690@robik>
+
+--===============5587105775520896942==
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+Activate account at example.com:
+
+http://example.com/accounts/activate/72525594b4b97bea817fc0ecafd8d22e1b49a8d8/
+
+Link is valid for 2 days.
+
+--===============5587105775520896942==
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>example.com registration</title>
+</head>
+
+<body>
+<p>
+    
+    You (or someone pretending to be you) have asked to register an account at
+    example.com.  If this wasn't you, please ignore this email
+    and your address will be removed from our records.
+    
+</p>
+<p>
+    
+    To activate this account, please click the following link within the next
+    2 days:
+    
+</p>
+
+<p>
+    <a href="http://example.com/accounts/activate/72525594b4b97bea817fc0ecafd8d22e1b49a8d8/">
+        example.com/accounts/activate/72525594b4b97bea817fc0ecafd8d22e1b49a8d8/
+    </a>
+</p>
+<p>
+    
+    Sincerely,
+    example.com Management
+    
+</p>
+</body>
+
+</html>
+
+
+
+
+--===============5587105775520896942==--
+
+-------------------------------------------------------------------------------
