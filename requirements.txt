@@ -13,4 +13,12 @@ django-autoslug==1.8.0
 django-mptt==0.7.4
 django-mptt-admin==0.2.1
 pytils==0.3
+django-annoying==0.8.3
+django-registration-redux==1.2
+haystack==0.15
+python-ptrace==0.8.1
+django-pagination==1.0.7
+django-ordered-model==0.4.2
+
+
 

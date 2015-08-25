@@ -11,6 +11,7 @@ DIO_CORE_APPS = [
     'mptt',
     'django_mptt_admin',
     'autoslug',
+
 ]
 
 

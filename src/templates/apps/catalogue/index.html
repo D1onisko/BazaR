@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+
+
+   {% for product_vivod in product_list %}
+
+      {% include "apps/catalogue/product_list.html" %}
+
+   {% endfor %}
+
+
+{% endblock %}

@@ -6,6 +6,7 @@ location = lambda x: os.path.join(
 ROOT_URLCONF = 'src.urls'
 
 WSGI_APPLICATION = 'src.wsgi.application'
+MPTT_ADMIN_LEVEL_INDENT = 5
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -15,12 +16,12 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 SECRET_KEY = '$)a7n&o80u!6y5t-+jrd3)3!%vh&shg$wqpjpxc!ar&p#!)n1a'
 
 # =====================================================================================================================
-#                                                       DATABASES
+#                           DATABASES
 # =====================================================================================================================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test',
+        'NAME': 'bazar',
         'USER': 'travis',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -28,7 +29,7 @@ DATABASES = {
     }
 }
 # =====================================================================================================================
-#                                                LANGUAGE_CODE / TIME_ZONE
+#                          LANGUAGE_CODE / TIME_ZONE
 # =====================================================================================================================
 TIME_ZONE = 'Europe/London'
 USE_TZ = True
@@ -46,7 +47,7 @@ LANGUAGES = (
 )
 
 # ======================================================================================================================
-#                                                       STATIC / MEDIA
+#                               STATIC / MEDIA
 # ======================================================================================================================
 
 MEDIA_ROOT = location("public/media")
@@ -61,11 +62,10 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 # ======================================================================================================================
-#                                                       TEMPLATES
+#                                 TEMPLATES
 # ======================================================================================================================
 
 TEMPLATE_LOADERS = (
@@ -85,6 +85,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 from src import DIO_MAIN_TEMPLATE_DIR
+
 TEMPLATE_DIRS = (
     location('templates'),
     DIO_MAIN_TEMPLATE_DIR,
@@ -92,7 +93,7 @@ TEMPLATE_DIRS = (
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-#                                                       INSTALLED_APPS / MIDDLEWARE
+#                               INSTALLED_APPS / MIDDLEWARE
 # ----------------------------------------------------------------------------------------------------------------------
 
 INSTALLED_APPS = [
@@ -106,10 +107,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
 
+    'registration',
 
 ]
 
 from src import get_core_apps
+
 INSTALLED_APPS = INSTALLED_APPS + get_core_apps()
 
 from src.defaults import *
@@ -125,3 +128,19 @@ MIDDLEWARE_CLASSES = (
 
 )
 
+# ----------------------------------------------------------------------------------------------------------------------
+#                                     MAIL
+# ----------------------------------------------------------------------------------------------------------------------
+
+ACCOUNT_ACTIVATION_DAYS = 2
+
+AUTH_USER_EMAIL_UNIQUE = True
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'info@google.ru'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = (os.path.join(os.path.dirname(__file__), '../mail'))

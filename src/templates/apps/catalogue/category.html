@@ -1,0 +1,16 @@
+{% extends "apps/catalogue/base.html" %}
+{% load i18n static %}
+
+{% block content %}
+
+  <h3>{{ category.title }}</h3>
+
+
+  {% for product_vivod in category_vivod %}
+
+  {% include "apps/catalogue/product_list.html" %}
+  {% endfor %}
+
+
+{% endblock %}
+z
