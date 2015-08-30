@@ -12,6 +12,7 @@ from autoslug.settings import slugify as default_slugify
 from autoslug import AutoSlugField
 
 from src.apps.catalogue.manager import ProductManager, BrowsableProductManager
+from mptt.models import MPTTModel, TreeForeignKey
 
 def custom_slugify(value):
     # для перевода в кирилицу нужно установить pytils==0.3
@@ -19,11 +20,19 @@ def custom_slugify(value):
 
 
 @python_2_unicode_compatible
-class Category(models.Model):
+class Category(MPTTModel):
     """
     Описание модели категория товара
     """
-    parent = models.ForeignKey('self', null=True, related_name='children',blank=True,db_index=True)
+
+    STANDALONE, PARENT, CHILD = 'standalone', 'parent', 'child'
+    STRUCTURE_CHOICES = (
+        (STANDALONE, _('Stand-alone product')),
+        (PARENT, _('Parent product')),
+        (CHILD, _('Child product'))
+    )
+    structure = models.CharField(_('Product structure'), max_length=10, choices=STRUCTURE_CHOICES, default=STANDALONE)
+    parent = TreeForeignKey(u'self', verbose_name=_(u'Parent'), blank=True, null=True, related_name=u'children')
     name = models.CharField(_('Name'), max_length=255, db_index=True)
     description = models.TextField(_('Description'), blank=True)
     slug = AutoSlugField(populate_from='name', slugify=custom_slugify, unique=True)
@@ -64,13 +73,6 @@ class Product(models.Model):
     """
     Описание модели  Product
     """
-    STANDALONE, PARENT, CHILD = 'standalone', 'parent', 'child'
-    STRUCTURE_CHOICES = (
-        (STANDALONE, _('Stand-alone product')),
-        (PARENT, _('Parent product')),
-        (CHILD, _('Child product'))
-    )
-    structure = models.CharField(_("Product structure"), max_length=10, choices=STRUCTURE_CHOICES, default=STANDALONE)
     category = models.ForeignKey(Category, verbose_name=_('Category'), related_name=u'entries')
     user_name = models.ForeignKey(User, related_name='+', to_field=u'username')
     title = models.CharField(_('Product title'), max_length=255, blank=True)

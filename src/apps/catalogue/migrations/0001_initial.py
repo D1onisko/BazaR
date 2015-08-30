@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import autoslug.fields
+import mptt.fields
 import src.apps.catalogue.models
 from django.conf import settings
 
@@ -18,11 +19,16 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('structure', models.CharField(default=b'standalone', max_length=10, verbose_name='Product structure', choices=[(b'standalone', 'Stand-alone product'), (b'parent', 'Parent product'), (b'child', 'Child product')])),
                 ('name', models.CharField(max_length=255, verbose_name='Name', db_index=True)),
                 ('description', models.TextField(verbose_name='Description', blank=True)),
                 ('slug', autoslug.fields.AutoSlugField(editable=False, populate_from=b'name', unique=True, slugify=src.apps.catalogue.models.custom_slugify)),
                 ('is_active', models.BooleanField(default=None, verbose_name='Is active')),
-                ('parent', models.ForeignKey(related_name=b'children', blank=True, to='catalogue.Category', null=True)),
+                ('lft', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('level', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('parent', mptt.fields.TreeForeignKey(related_name='children', verbose_name='Parent', blank=True, to='catalogue.Category', null=True)),
             ],
             options={
                 'ordering': ('name',),
@@ -35,8 +41,7 @@ class Migration(migrations.Migration):
             name='Product',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('structure', models.CharField(default=b'standalone', max_length=10, verbose_name='Product structure', choices=[(b'standalone', 'Stand-alone product'), (b'parent', 'Parent product'), (b'child', 'Child product')])),
-                ('title', models.CharField(max_length=255, verbose_name=(b'Product title', 'Title'), blank=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Product title', blank=True)),
                 ('slug', autoslug.fields.AutoSlugField(populate_from=b'title', editable=False, slugify=src.apps.catalogue.models.custom_slugify)),
                 ('price', models.IntegerField(verbose_name='Price', blank=True)),
                 ('description', models.TextField(verbose_name='Description', blank=True)),
