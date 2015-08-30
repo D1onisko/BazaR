@@ -1,11 +1,9 @@
 {% load i18n static %}
 
-        {% for item in categories %}
-        <a class="list-group-item " href=" {{ item.get_absolute_url }}">{{ item }}</a>
-          {% for subitem in item.category_set.all %}
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ item.get_absolute_url }}">{{ subitem }}</a>
-          {% endfor %}
-        {% empty %}
-        {% trans "No categories found." %}
-        {% endfor %}
+{% for item in categories %}
+
+    <a class="list-group-item " href=" {{ item.get_absolute_url }}">{{ item }}</a>
+
+
+{% endfor %}
 

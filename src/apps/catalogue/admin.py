@@ -9,7 +9,7 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_created'
-    list_display = ('get_title', 'structure', 'date_created')
+    list_display = ('get_title', 'category', 'date_created')
     list_filter = ['structure', 'is_discountable']
     search_fields = ['title']
 

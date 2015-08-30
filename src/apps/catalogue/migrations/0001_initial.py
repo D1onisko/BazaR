@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import autoslug.fields
-import mptt.fields
 import src.apps.catalogue.models
 from django.conf import settings
 
@@ -23,11 +22,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name='Description', blank=True)),
                 ('slug', autoslug.fields.AutoSlugField(editable=False, populate_from=b'name', unique=True, slugify=src.apps.catalogue.models.custom_slugify)),
                 ('is_active', models.BooleanField(default=None, verbose_name='Is active')),
-                ('lft', models.PositiveIntegerField(editable=False, db_index=True)),
-                ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
-                ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
-                ('mptt_level', models.PositiveIntegerField(editable=False, db_index=True)),
-                ('parent', mptt.fields.TreeForeignKey(related_name=b'children', blank=True, to='catalogue.Category', null=True)),
+                ('parent', models.ForeignKey(related_name=b'children', blank=True, to='catalogue.Category', null=True)),
             ],
             options={
                 'ordering': ('name',),
@@ -41,7 +36,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('structure', models.CharField(default=b'standalone', max_length=10, verbose_name='Product structure', choices=[(b'standalone', 'Stand-alone product'), (b'parent', 'Parent product'), (b'child', 'Child product')])),
-                ('title', models.CharField(max_length=255, verbose_name='Title', blank=True)),
+                ('title', models.CharField(max_length=255, verbose_name=(b'Product title', 'Title'), blank=True)),
                 ('slug', autoslug.fields.AutoSlugField(populate_from=b'title', editable=False, slugify=src.apps.catalogue.models.custom_slugify)),
                 ('price', models.IntegerField(verbose_name='Price', blank=True)),
                 ('description', models.TextField(verbose_name='Description', blank=True)),
@@ -99,6 +94,12 @@ class Migration(migrations.Migration):
             model_name='product',
             name='categories',
             field=models.ManyToManyField(to='catalogue.Category', verbose_name='Categories', through='catalogue.ProductCategory'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='product',
+            name='category',
+            field=models.ForeignKey(related_name='entries', verbose_name='Category', to='catalogue.Category'),
             preserve_default=True,
         ),
         migrations.AddField(

@@ -10,7 +10,6 @@ import mptt
 
 from autoslug.settings import slugify as default_slugify
 from autoslug import AutoSlugField
-from mptt.models import MPTTModel, TreeForeignKey
 
 from src.apps.catalogue.manager import ProductManager, BrowsableProductManager
 
@@ -20,11 +19,11 @@ def custom_slugify(value):
 
 
 @python_2_unicode_compatible
-class Category(MPTTModel):
+class Category(models.Model):
     """
     Описание модели категория товара
     """
-    parent = TreeForeignKey('self', null=True, related_name='children',blank=True,db_index=True)
+    parent = models.ForeignKey('self', null=True, related_name='children',blank=True,db_index=True)
     name = models.CharField(_('Name'), max_length=255, db_index=True)
     description = models.TextField(_('Description'), blank=True)
     slug = AutoSlugField(populate_from='name', slugify=custom_slugify, unique=True)
@@ -38,14 +37,9 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
-    class MPTTMeta:
-        level_attr = 'mptt_level'
-        order_insertion_by=['name']
-
     def get_absolute_url(self):
         return reverse('catalogue:category', args=[self.slug])
 
-mptt.register(Category)
 
 @python_2_unicode_compatible
 class ProductCategory(models.Model):
@@ -77,8 +71,9 @@ class Product(models.Model):
         (CHILD, _('Child product'))
     )
     structure = models.CharField(_("Product structure"), max_length=10, choices=STRUCTURE_CHOICES, default=STANDALONE)
-    title = models.CharField(pgettext_lazy(u'Product title', u'Title'), max_length=255, blank=True)
+    category = models.ForeignKey(Category, verbose_name=_('Category'), related_name=u'entries')
     user_name = models.ForeignKey(User, related_name='+', to_field=u'username')
+    title = models.CharField(_('Product title'), max_length=255, blank=True)
     slug = AutoSlugField(populate_from='title', slugify=custom_slugify, unique=False)
     price = models.IntegerField(_('Price'), blank=True)
     description = models.TextField(_('Description'), blank=True)
