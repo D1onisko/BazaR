@@ -6,6 +6,7 @@
       <w>baza</w>
       <w>csrf</w>
       <w>mptt</w>
+      <w>sitetree</w>
     </words>
   </dictionary>
 </component>
