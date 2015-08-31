@@ -1,10 +1,8 @@
 
 
-<!-- что б выводились превюшки, нужно в img src= вставить (product_list.url), а не переменную инерации-->
 <div class="col-xs-6 col-sm-6 col-lg-12" >
 
-<p><h2><a href="{{ get_absolute_url }}">{{ product_vivod.title }}</a></h2>
-    <p>{{ product_vivod.pk }}</p>
+<p><h2><a href="{{ product_vivod.get_absolute_url }}">{{ product_vivod.title }}</a></h2>
 
     <p>{{ product_vivod.description }}</p>
     <p>{{ product_vivod.date_created|date }}</p>

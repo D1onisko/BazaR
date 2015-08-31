@@ -19,6 +19,7 @@ class IndexView(ListView):
 class DetailProductView(DetailView):
     model = Product
     template_name = 'apps/catalogue/detail.html'
+    context_object_name = 'product_vivod'
 
 
 # меню сайта
