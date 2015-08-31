@@ -48,6 +48,8 @@ class Migration(migrations.Migration):
                 ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Date created')),
                 ('date_updated', models.DateTimeField(auto_now=True, verbose_name='Date updated', db_index=True)),
                 ('is_discountable', models.BooleanField(default=True, verbose_name='Is discountable?')),
+                ('category', models.ForeignKey(related_name='entries', verbose_name='Category', to='catalogue.Category')),
+                ('user_name', models.ForeignKey(related_name=b'+', to=settings.AUTH_USER_MODEL, to_field='username')),
             ],
             options={
                 'ordering': ['-date_created'],
@@ -55,62 +57,5 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Products',
             },
             bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='ProductCategory',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('category', models.ForeignKey(verbose_name='Category', to='catalogue.Category')),
-                ('product', models.ForeignKey(verbose_name='Product', to='catalogue.Product')),
-            ],
-            options={
-                'ordering': ['product', 'category'],
-                'verbose_name': 'Product category',
-                'verbose_name_plural': 'Product categories',
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='ProductImage',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('original', models.ImageField(upload_to=b'images/products/%Y/%m/', max_length=255, verbose_name=b'Original')),
-                ('caption', models.CharField(max_length=200, verbose_name='Caption', blank=True)),
-                ('display_order', models.PositiveIntegerField(default=0, verbose_name='Display order')),
-                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Date created')),
-                ('product', models.ForeignKey(related_name=b'images', verbose_name='Product', to='catalogue.Product')),
-            ],
-            options={
-                'ordering': ['display_order'],
-                'verbose_name': 'Product image',
-                'verbose_name_plural': 'Product images',
-            },
-            bases=(models.Model,),
-        ),
-        migrations.AlterUniqueTogether(
-            name='productimage',
-            unique_together=set([('product', 'display_order')]),
-        ),
-        migrations.AlterUniqueTogether(
-            name='productcategory',
-            unique_together=set([('product', 'category')]),
-        ),
-        migrations.AddField(
-            model_name='product',
-            name='categories',
-            field=models.ManyToManyField(to='catalogue.Category', verbose_name='Categories', through='catalogue.ProductCategory'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='product',
-            name='category',
-            field=models.ForeignKey(related_name='entries', verbose_name='Category', to='catalogue.Category'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='product',
-            name='user_name',
-            field=models.ForeignKey(related_name=b'+', to=settings.AUTH_USER_MODEL, to_field='username'),
-            preserve_default=True,
         ),
     ]

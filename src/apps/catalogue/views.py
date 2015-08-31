@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, ListView
 from annoying.decorators import render_to
 from django.shortcuts import get_object_or_404, redirect
 
 from src.apps.catalogue.models import Category, Product
 
+# Index page
+class IndexView(ListView):
+    template_name = 'apps/catalogue/index.html'
+    context_object_name = 'index_list_all'
 
-@render_to('apps/catalogue/index.html')
-def index(request):
-    product_list = Product.objects.all()
-    return {'product_list': product_list}
+    def get_queryset(self):
+        """ возврощяет все обьекты Product """
+        return Product.objects.all()
 
 
-# вывод детального описания лота
-@render_to('apps/catalogue/detail.html')
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    return {'product': product}
+#  Detail page
+class DetailProductView(DetailView):
+    model = Product
+    template_name = 'apps/catalogue/detail.html'
 
 
 # меню сайта
@@ -26,11 +28,8 @@ def category(request, slug):
 
     # вывод всех продуктов категории
 
-    caterogy_vivod_all = Product.objects.count()
-
     # фильтрация продуктов определенной одной категории
     category_vivod = Product.objects.filter(category_id=current_category.pk)
     return dict(current_category=current_category,
                 category_vivod=category_vivod,
-                caterogy_vivod_all=caterogy_vivod_all
                 )
