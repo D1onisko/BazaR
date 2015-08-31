@@ -11,7 +11,7 @@
 
 
            <a class="list-group-item" href="/category/{{ node.slug }}/">
-           {{ node.name }}|  ({{ node.count_product }})
+           {{ node.name }}|  ({{ node.get_query_set }})
             </a>
 
        {% if not node.is_leaf_node %}

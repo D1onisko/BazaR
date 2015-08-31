@@ -50,6 +50,7 @@ class Category(MPTTModel):
         return reverse('catalogue:category', args=[self.slug])
 
 
+
 @python_2_unicode_compatible
 class ProductCategory(models.Model):
     """
@@ -99,20 +100,6 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('catalogue:detail',
                        kwargs={'product_slug': self.slug, 'pk': self.id})
-
-        # Properties
-
-    @property
-    def is_standalone(self):
-        return self.structure == self.STANDALONE
-
-    @property
-    def is_parent(self):
-        return self.structure == self.PARENT
-
-    @property
-    def is_child(self):
-        return self.structure == self.CHILD
 
     def get_title(self):
         """

@@ -3,13 +3,18 @@
 
 {% block content %}
 
-  <h3>{{ category.title }}</h3>
+  <h3>{{ current_category.name }}</h3>
+{% if current_category.is_root_node %}
 
+вывод всех лотов даной категории
+    {{ caterogy_vivod_all }}
+
+    {% else%}
 
   {% for product_vivod in category_vivod %}
-
   {% include "apps/catalogue/product_list.html" %}
   {% endfor %}
 
+{% endif %}
 
 {% endblock %}

@@ -23,12 +23,14 @@ def product_detail(request, pk):
 @render_to('apps/catalogue/category_all_item.html')
 def category(request, slug):
     current_category = get_object_or_404(Category, slug=slug)
-    root_category_id = current_category.get_root()
-    count = current_category.get_descendant_count()
-    # фильтрация продуктов определенной категории
+
+    # вывод всех продуктов категории
+
+    caterogy_vivod_all = Product.objects.count()
+
+    # фильтрация продуктов определенной одной категории
     category_vivod = Product.objects.filter(category_id=current_category.pk)
     return dict(current_category=current_category,
-                root_category_id=root_category_id,
                 category_vivod=category_vivod,
-                count=count
+                caterogy_vivod_all=caterogy_vivod_all
                 )
