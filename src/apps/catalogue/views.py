@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import DetailView, TemplateView, ListView
-from annoying.decorators import render_to
 from django.shortcuts import get_object_or_404, redirect
 
-from src.apps.catalogue.models import Category, Product
+from annoying.decorators import render_to, render_to_response
+from pure_pagination.mixins import PaginationMixin
 import mptt
 
+from src.apps.catalogue.models import Category, Product
+
 # Index page
-class IndexView(ListView):
+class IndexView(PaginationMixin, ListView):
     template_name = 'apps/catalogue/index.html'
-    context_object_name = 'view_all_products'
+    model = Product
+    paginate_by = 3
 
     def get_queryset(self):
         """ возврощяет все обьекты Product """
@@ -18,29 +21,28 @@ class IndexView(ListView):
 
 # Detail page
 class DetailProductView(DetailView):
-    model = Product
     template_name = 'apps/catalogue/product_detail.html'
+    model = Product
     context_object_name = 'product_vivod'
 
 
-# меню сайта
-@render_to('apps/catalogue/products_in_category.html')
-def products_in_category(request, slug):
-    current_category = get_object_or_404(Category, slug=slug)
-    # фильтрация продуктов определенной категории
-    category_vivod = Product.objects.filter(category_id=current_category.pk)
-    return dict(category_vivod=category_vivod)
+# Product in category
+class ProductList(PaginationMixin, ListView):
+    template_name = 'apps/catalogue/products_in_category.html'
+    model = Product
+    paginate_by = 2
 
+    def get_queryset(self):
+        category = get_object_or_404(Category, slug=self.kwargs['slug'])
 
-@render_to('apps/catalogue/all_products_in_category.html')
-def all_products_in_root_category(request, slug):
-    current_category = get_object_or_404(Category, slug=slug)
-    # выборка и запись в список id товара
-    q = current_category.get_children()
-    test = q.values('id')
-    ix = [item['id'] for item in test]
-    # фильтрация всех продуктов определенной категории
-    category_vivod_all = Product.objects.filter(category_id__in=ix)
-    return dict(test=ix,
-                category_vivod_all=category_vivod_all,
-                )
+        # filter product in child category
+        if category.is_child_node():
+            return Product.objects.filter(category_id=category.pk)
+
+        # view all product in root category
+        elif category.is_root_node():
+            q = category.get_children()
+            t = q.values('id')
+            x = [item['id'] for item in t]
+            return Product.objects.filter(category_id__in=x)
+
