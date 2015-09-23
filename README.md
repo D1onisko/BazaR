@@ -1,3 +1,3 @@
 # BazaR
 Market 
-developers
+development
