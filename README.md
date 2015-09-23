@@ -1,3 +1,2 @@
 # BazaR
-Market 
 development
