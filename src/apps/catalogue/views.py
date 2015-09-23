@@ -3,10 +3,14 @@ from django.views.generic import DetailView, TemplateView, ListView
 from django.shortcuts import get_object_or_404, redirect
 
 from annoying.decorators import render_to, render_to_response
-from pure_pagination.mixins import PaginationMixin
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger, PaginationMixin
+
+
 import mptt
 
 from src.apps.catalogue.models import Category, Product
+
+
 
 # Index page
 class IndexView(PaginationMixin, ListView):
@@ -30,7 +34,7 @@ class DetailProductView(DetailView):
 class ProductList(PaginationMixin, ListView):
     template_name = 'apps/catalogue/products_in_category.html'
     model = Product
-    paginate_by = 2
+    paginate_by = 3
 
     def get_queryset(self):
         category = get_object_or_404(Category, slug=self.kwargs['slug'])
@@ -38,11 +42,11 @@ class ProductList(PaginationMixin, ListView):
         # filter product in child category
         if category.is_child_node():
             return Product.objects.filter(category_id=category.pk)
-
         # view all product in root category
         elif category.is_root_node():
             q = category.get_children()
             t = q.values('id')
             x = [item['id'] for item in t]
             return Product.objects.filter(category_id__in=x)
+
 

@@ -7,6 +7,7 @@
         <span class="disabled prev">&lsaquo;&lsaquo; {% trans "Сюды" %}</span>
     {% endif %}
     {% for page in page_obj.pages %}
+
         {% if page %}
             {% ifequal page page_obj.number %}
                 <span class="current page">{{ page }}</span>
@@ -16,11 +17,12 @@
         {% else %}
             ...
         {% endif %}
+
     {% endfor %}
+
     {% if page_obj.has_next %}
         <a href="?{{ page_obj.next_page_number.querystring }}" class="next">{% trans "Туды" %} &rsaquo;&rsaquo;</a>
     {% else %}
         <span class="disabled next">{% trans "Туды" %} &rsaquo;&rsaquo;</span>
-
-    {% endif %}
+{% endif %}
 </div>
