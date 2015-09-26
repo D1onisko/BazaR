@@ -3,10 +3,13 @@ from django.utils import timezone
 from haystack import indexes
 from src.apps.catalogue.models import Product
 
+
 class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    user = indexes.CharField(model_attr='user_name')
+    user = indexes.CharField(model_attr='user_name', faceted=True)
     date_created = indexes.DateField(model_attr='date_created')
+    price = indexes.IntegerField(model_attr='price')
+    # We add this for autocomplete.
 
     def get_model(self):
         return Product

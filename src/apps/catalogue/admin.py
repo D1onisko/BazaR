@@ -7,8 +7,8 @@ from src.apps.catalogue import models
 
 class ProductAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_created'
-    list_display = ('title', 'category', 'date_created')
-    list_filter = ['is_discountable']
+    list_display = ('title', 'category', 'date_created', 'user_name')
+    list_filter = ['is_discountable', 'user_name']
     search_fields = ['title']
 
 

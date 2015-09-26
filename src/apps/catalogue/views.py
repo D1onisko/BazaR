@@ -2,7 +2,6 @@
 from django.views.generic import DetailView, TemplateView, ListView
 from django.shortcuts import get_object_or_404, redirect
 
-from annoying.decorators import render_to, render_to_response
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger, PaginationMixin
 
 

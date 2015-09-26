@@ -2,18 +2,19 @@
 {% load i18n %}
 
 {% block content %}
-      <form class="form-signin" role="form" method="post" action=".">
-        <h2 class="form-signin-heading">Please sign in</h2>
-  {% csrf_token %}
-  {{ form.as_p }}
 
-       <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<div class = 'col-sm-6 col-sm-offset-3'>
+
+    <form method="post" action=".">
+  <h2 class="form-signin-heading">Please sign in</h2>
+  {% csrf_token %}
+  {{ form }}
+
+<button class="btn btn-primary " type="submit">Sign in</button>
 <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
 <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
 
       </form>
+  </div>
 {% endblock %}
 

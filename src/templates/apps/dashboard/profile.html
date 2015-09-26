@@ -1,0 +1,15 @@
+{% extends "base_no_head.html" %}
+
+{% block content %}
+<h2 class="col-lg-push-7">Личный кабинет  {{ user.username }} 'a</h2>
+  {% if object_list  %}
+
+  {% for product_vivod in object_list %}
+      {% include "apps/catalogue/product.html" %}
+      {% endfor %}
+
+  {% else %}
+У Вас еще нет обьявлений ... {% endif %}
+
+
+{% endblock %}

@@ -9,5 +9,6 @@ urlpatterns = patterns('',
 
     url(r'^', include('src.apps.catalogue.urls', namespace='catalogue')),
     url(r'^', include('src.apps.search.urls', namespace='search', )),
+    url(r'^', include('src.apps.dashboard.urls', namespace='dashboard')),
 
 )
