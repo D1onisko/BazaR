@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load highlight %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h2>Search</h2>
 
     <form method="get" action=".">
         <table>
-            {{ form }}
+            {{ form|crispy }}
             <tr>
                 <td>
                     <input type="submit" value="Search">

@@ -1,0 +1,16 @@
+
+
+<div class="col-xs-6 col-sm-6 col-lg-12" >
+
+<p><h2><a href="{{ product_vivod.get_absolute_url }}">{{ product_vivod.title }}</a></h2>
+    <p>{{ product_vivod.description }}</p>
+    <p>{{ product_vivod.date_created|date }}</p>
+    <p>{{ product_vivod.user_name }}</p>
+    <a href="{% url 'dashboard:product_update' product_vivod.pk %}">Update product</a>  |
+    <a href="{% url 'dashboard:product_delete' product_vivod.pk %}">Delete product</a>
+
+    <hr>
+
+</div>
+
+
