@@ -29,11 +29,8 @@ class ProductCreate(CreateView):
     model = Product
     form_class = AddProductForm
 
-    # для работы валидации формы и возможности использовать request.user
-    def dispatch(self, request, *args, **kwargs):
-        return super(ProductCreate, self).dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
+        form = AddProductForm(self.request.POST, self.request.FILES)
         add = form.save(commit=False)
         add.user_name_id = self.request.user
         add.save()

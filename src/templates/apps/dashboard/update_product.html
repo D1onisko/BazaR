@@ -6,7 +6,7 @@
 {% if user.is_authenticated %}
 
 <div class="form-horizontal" role="form">
-<form role="form" method="post" action=".">
+<form role="form" method="post"  enctype="multipart/form-data" action=".">
   {% csrf_token %}
   {{ form|crispy }}
 

@@ -26,7 +26,7 @@ class SelectCategory(ModelChoiceField):
 Base fields in forms
 """
 class BaseFields(forms.Form):
-    category = SelectCategory(empty_label='---', queryset=Category.objects.filter(level=1), label='Категория')
+    category = SelectCategory(empty_label='---', queryset=Category.objects.exclude(level=0), label='Категория')
     title = forms.CharField(label='Название товара')
     price = forms.IntegerField(label='Цена')
     description = forms.CharField(widget=forms.Textarea, max_length=100, label='Описание')
@@ -39,7 +39,7 @@ class AddProductForm(ModelForm, BaseFields):
 
     class Meta:
         model = Product
-        fields = 'title', 'category', 'price', 'description',
+        fields = 'title', 'category', 'price','phone','address', 'description', 'image',
 
 
 """
@@ -49,4 +49,4 @@ class UpdateProductForm(ModelForm, BaseFields):
 
     class Meta:
         model = Product
-        fields = 'title', 'category', 'price', 'description',
+        fields = 'title', 'category', 'price', 'phone','address','description','image',
