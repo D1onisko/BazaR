@@ -1,6 +1,8 @@
 {% load i18n %}
 <div class="pagination">
 
+{% if page_obj.has_next %}
+
     {% if page_obj.has_previous %}
         <a href="?{{ page_obj.previous_page_number.querystring }}" class="prev">&lsaquo;&lsaquo; {% trans "Сюды" %}</a>
     {% else %}
@@ -24,5 +26,10 @@
         <a href="?{{ page_obj.next_page_number.querystring }}" class="next">{% trans "Туды" %} &rsaquo;&rsaquo;</a>
     {% else %}
         <span class="disabled next">{% trans "Туды" %} &rsaquo;&rsaquo;</span>
+    {% endif %}
+{% else %}
+
+
 {% endif %}
+
 </div>
