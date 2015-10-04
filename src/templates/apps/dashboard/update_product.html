@@ -3,6 +3,8 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if user.is_authenticated %}
+
 <div class="form-horizontal" role="form">
 <form role="form" method="post" action=".">
   {% csrf_token %}
@@ -11,4 +13,9 @@
   <input type="submit" value="{% trans 'Submit' %}" />
 </form>
 </div>
+
+    {% else %}
+<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
+    {% endif %}
+
 {% endblock %}

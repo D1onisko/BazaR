@@ -1,4 +1,5 @@
 {% extends "base_no_head.html" %}
+{% load i18n %}
 
 {% block content %}
     {% if user.is_authenticated %}
@@ -17,7 +18,7 @@
         {% endif %}
 
     {% else %}
-        оуу парнишка  регайся
+<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
     {% endif %}
 
 {% endblock %}

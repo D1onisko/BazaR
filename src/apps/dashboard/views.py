@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, BaseFo
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 
-from src.apps.catalogue.models import Product
+from src.apps.catalogue.models import Product, Category
 from src.apps.dashboard.forms import AddProductForm, UpdateProductForm
 
 
@@ -15,6 +15,7 @@ class DashboardIndexView(TemplateView):
     template_name = 'apps/dashboard/profile.html'
     model = Product
 
+    # Для вывода обьявлений определенного юзера
     def get(self, request, *args, **kwargs):
         kwargs['object_list'] = Product.objects.filter(user_name_id=request.user)
         return super(DashboardIndexView, self).get(request, *args, **kwargs)
@@ -28,7 +29,7 @@ class ProductCreate(CreateView):
     model = Product
     form_class = AddProductForm
 
-    # для работы валидации формы и возможносли использовать request.user
+    # для работы валидации формы и возможности использовать request.user
     def dispatch(self, request, *args, **kwargs):
         return super(ProductCreate, self).dispatch(request, *args, **kwargs)
 

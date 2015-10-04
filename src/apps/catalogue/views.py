@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import DetailView, TemplateView, ListView
 from django.shortcuts import get_object_or_404, redirect
-
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger, PaginationMixin
-
-
 import mptt
 
 from src.apps.catalogue.models import Category, Product
 
 
-
-# Index page
+"""
+Index page
+"""
 class IndexView(PaginationMixin, ListView):
     template_name = 'apps/catalogue/index.html'
     model = Product
@@ -21,15 +19,17 @@ class IndexView(PaginationMixin, ListView):
         """ возврощяет все обьекты Product """
         return Product.objects.all()
 
-
-# Detail page
+"""
+Detail page
+"""
 class DetailProductView(DetailView):
     template_name = 'apps/catalogue/product_detail.html'
     model = Product
     context_object_name = 'product_vivod'
 
-
-# Product in category
+"""
+Product in category
+"""
 class ProductList(PaginationMixin, ListView):
     template_name = 'apps/catalogue/products_in_category.html'
     model = Product

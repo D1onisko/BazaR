@@ -15,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 class CategoryAdmin(DjangoMpttAdmin):
     list_display = ('name', 'is_active')
-    fieldsets = ((None, {'fields': ('name', 'is_active', 'parent', 'structure')}), )
+    fieldsets = ((None, {'fields': ('name', 'is_active', 'parent', 'structure','description')}), )
     search_fields = ('name',)
     mptt_level_indent = 20
 

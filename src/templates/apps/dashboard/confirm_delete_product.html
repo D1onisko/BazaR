@@ -2,8 +2,15 @@
 {% load i18n %}
 
 {% block content %}
+{% if user.is_authenticated %}
+
 <form action="" method="post">
     {% csrf_token %}
     <button>Удалить</button>
 </form>
+
+   {% else %}
+<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
+   {% endif %}
+
 {% endblock %}
