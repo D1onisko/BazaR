@@ -3,14 +3,15 @@ import os
 DIO_MAIN_TEMPLATE_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'templates')
 
+
 DIO_CORE_APPS = [
     'src',
     'src.apps.catalogue',
+    'src.apps.search',
+    'src.apps.dashboard',
 
-    'sorl.thumbnail',
-    'mptt',
-    'django_mptt_admin',
-    'autoslug',
+
+
 
 ]
 
@@ -44,3 +45,4 @@ def get_core_apps(overrides=None):
     for app_label in DIO_CORE_APPS:
         apps.append(get_app_label(app_label, overrides))
     return apps
+

@@ -1,0 +1,25 @@
+{% load thumbnail %}
+
+{% thumbnail product_vivod.image "260x180" as object_list %}
+<!-- что б выводились превюшки, нужно в img src= вставить (object_list.url), а не переменную инерации-->
+
+<div class="media">
+
+
+<a class="pull-left" href="{{ product_vivod.image.url }}" target='_blank'>
+    <img class='img-polaroid' src = '{{ object_list.url }}' width = '150' height = '120' /></a>
+
+<div class="media-body">
+     <h3 class="media-heading"><a href="{{ product_vivod.get_absolute_url }}">{{ product_vivod.title }}</a></h3>
+<div class="media">
+    <p>описание --- {{ product_vivod.description }}</p>
+    <p>цена --- {{ product_vivod.price }}</p>
+    <p>дата --- {{ product_vivod.date_created|date }}</p>
+    <p>пользователь --- {{ product_vivod.user_name }}</p>
+    <hr>
+</div>
+       </div>
+
+</div>
+{% endthumbnail %}
+

@@ -37,13 +37,15 @@
         <div class="collapse navbar-collapse">
         <!-- Пункты верхнего меню -->
                 <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
+            <li><a href={% url 'search:haystack_search' %}>Поиск</a></li>
+
                 </ul>
+
 <ul class="nav navbar-nav navbar-right">
 {% load i18n static %}
 
     {% if user.is_authenticated %}
-        <li><a href="">{% trans "Личный кабинет" %}</a></li>
+        <li><a href={% url "dashboard:dashboard_index" %}>{% trans "Личный кабинет" %}</a></li>
         <li><a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a></li>
     {% else %}
         <li><a href="{% url 'auth_login' %}">{% trans "Log in" %}</a></li>
@@ -53,22 +55,23 @@
 
 
         </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
+      </div>
+    <!-- /.container -->
     </div><!--  / Верхнее навигационное меню -->
 
 <div class="container">
 
+
       <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-          <div class="list-group">
-            <!-- пункты меню -->
-            {% if user.is_authenticated %}
-                {% trans "Привет" %}: {{ user.username }}
-            {% endif %}
+         <!-- Menu -->
+            <div class="list-group">
+<ul class="nav nav-tabs nav-stacked">
 
-                <!-- Menu -->
-           {% include 'menu.html' %}
 
+              <!-- пункты меню -->
+
+                    {% include 'menu.html' %}
           </div>
         </div><!--/span-->
 
@@ -77,15 +80,16 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
 
-            <div class="jumbotron"><!-- Верхний блок -->
-            <h1>BazaR </h1>
-            <p>Чаплинский интернет рынок</p>
-            </div><!--  / Верхний блок -->
 
+       <div class="jumbotron"><!-- Верхний блок -->
+                    <h1>BazaR </h1>
+                    <p>Чаплинский интернет рынок</p>
 
-<div class="row">
+       </div><!--  / Верхний блок -->
 
- {% block content %}{% endblock %}
+            <div class="row">
+
+ {% block content %} {% endblock %}
 
             </div>
          </div><!--/span-->
@@ -94,6 +98,7 @@
 
 
 </div><!--/.container-->
+
 
 <!-- Footer -->
     <div id="footer">

@@ -15,6 +15,10 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 SECRET_KEY = '$)a7n&o80u!6y5t-+jrd3)3!%vh&shg$wqpjpxc!ar&p#!)n1a'
 
+def rel_project(*x):
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
+
+
 # =====================================================================================================================
 #                           DATABASES
 # =====================================================================================================================
@@ -22,7 +26,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bazar',
-        'USER': 'travis',
+        'USER': 'd1onis',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '',
@@ -49,6 +53,7 @@ LANGUAGES = (
 # ======================================================================================================================
 #                               STATIC / MEDIA
 # ======================================================================================================================
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MEDIA_ROOT = location("public/media")
 
@@ -108,6 +113,15 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 
     'registration',
+    'pure_pagination',
+    'sorl.thumbnail',
+    'mptt',
+    'django_mptt_admin',
+    'autoslug',
+    'haystack',
+    'debug_toolbar',
+    'crispy_forms',
+
 
 ]
 
@@ -126,12 +140,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
 
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+
 )
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                     MAIL
 # ----------------------------------------------------------------------------------------------------------------------
-
 ACCOUNT_ACTIVATION_DAYS = 2
 
 AUTH_USER_EMAIL_UNIQUE = True
@@ -144,3 +160,20 @@ DEFAULT_FROM_EMAIL = 'info@google.ru'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = (os.path.join(os.path.dirname(__file__), '../mail'))
+
+# ----------------------------------------------------------------------------------------------------------------------
+#                                    ElasticSearch
+# ----------------------------------------------------------------------------------------------------------------------
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 2
+HAYSTACK_CUSTOM_HIGHLIGHTER = 'src.app.search.utils.BorkHighligher'
+

@@ -4,11 +4,12 @@
 {% block content %}
 
 
-   {% for product_vivod in index_list_all %}
+   {% for product_vivod in object_list %}
 
-      {% include "apps/catalogue/product_list.html" %}
+      {% include "apps/catalogue/product.html" %}
 
    {% endfor %}
 
+   {% include "_pagination.html" %}
 
 {% endblock %}

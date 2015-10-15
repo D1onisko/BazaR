@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+
+  {% if object_list  %}
+
+      {% for product_vivod in object_list %}
+      {% include "apps/catalogue/product.html" %}
+      {% endfor %}
+
+      {% include "_pagination.html" %}
+
+  {% else %}
+      Нет обьявлений в категории
+  {% endif %}
+
+{% endblock %}

@@ -14,7 +14,8 @@ def menu_tag():
 
     return {
 
-        'categories': models.Category.objects.filter(is_active=True)
+        'categories': models.Category.objects.filter(is_active=True),
+
     }
 
 

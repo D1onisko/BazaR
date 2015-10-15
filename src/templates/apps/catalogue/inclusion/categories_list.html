@@ -1,25 +1,20 @@
 {% load i18n static %}
-
-{% comment %}
-{% for item in categories %}
-    <a class="list-group-item " href=" {{ item.get_absolute_url }}">{{ item }}</a>
-{% endfor %}
-{% endcomment %}
-
 {% load mptt_tags %}
-   {% recursetree categories %}
 
 
-           <a class="list-group-item" href="/category/{{ node.slug }}/">
-           {{ node.name }}|  ({{ node.get_query_set }})
-            </a>
+{% recursetree categories %}
 
-       {% if not node.is_leaf_node %}
-               <ul class="children">
-                    {{ children }}
-                </ul>
-           {% endif %}
+        <a class="list-group-item" href="/category/{{ node.slug }}/">{{ node.name }}</a>
 
+        {% if not node.is_leaf_node %}
 
-    {% endrecursetree %}
+             <ul class="nav nav-list">
+
+             <li class="active">{{ children }}</li>
+
+             </ul>
+
+        {% endif %}
+{% endrecursetree %}
+
 
