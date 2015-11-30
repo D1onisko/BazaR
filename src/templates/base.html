@@ -13,13 +13,17 @@
     <link rel="stylesheet" type="text/css" href='{% static "bootstrap/css/offcanvas.css" %}'  />
     <link rel="stylesheet" type="text/css" href='{% static "bootstrap/css/footer_down.css" %}'  />
 
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
+
+
 <!-- Верхнее навигационное меню -->
+
 <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -33,47 +37,43 @@
 
           <a class="navbar-brand" href="/">BazaR</a>
         </div>
+      <div class="collapse navbar-collapse">
 
-        <div class="collapse navbar-collapse">
-        <!-- Пункты верхнего меню -->
-                <ul class="nav navbar-nav">
-            <li><a href={% url 'search:haystack_search' %}>Поиск</a></li>
-
-                </ul>
+<!-- Пункты верхнего меню -->
+            <ul class="nav navbar-nav">
+                <li><a href={% url 'search:haystack_search' %}>Поиск</a></li>
+            </ul>
 
 <ul class="nav navbar-nav navbar-right">
-{% load i18n static %}
-
     {% if user.is_authenticated %}
         <li><a href={% url "dashboard:dashboard_index" %}>{% trans "Личный кабинет" %}</a></li>
         <li><a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a></li>
     {% else %}
         <li><a href="{% url 'auth_login' %}">{% trans "Log in" %}</a></li>
     {% endif %}
-
 </ul>
 
-
-        </div><!-- /.nav-collapse -->
+        </div>
       </div>
-    <!-- /.container -->
-    </div><!--  / Верхнее навигационное меню -->
+    </div>
 
 <div class="container">
-
-
-      <div class="row row-offcanvas row-offcanvas-right">
+   <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-         <!-- Menu -->
-            <div class="list-group">
-<ul class="nav nav-tabs nav-stacked">
+
+<!-- Menu -->
+        <div class="list-group">
+            <ul class="nav nav-tabs nav-stacked">
 
 
-              <!-- пункты меню -->
+<!-- пункты меню -->
 
-                    {% include 'menu.html' %}
+{% load catalogue_widgets %}
+{% menu_tag %}
+
+
           </div>
-        </div><!--/span-->
+        </div>
 
         <div class="col-xs-12 col-sm-9">
           <p class="pull-right visible-xs">
@@ -81,15 +81,17 @@
           </p>
 
 
-       <div class="jumbotron"><!-- Верхний блок -->
+<!-- Верхний блок --><div class="jumbotron">
                     <h1>BazaR </h1>
                     <p>Чаплинский интернет рынок</p>
 
-       </div><!--  / Верхний блок -->
+        </div>
 
             <div class="row">
 
- {% block content %} {% endblock %}
+
+<!-- content -->{% block content %} {% endblock %}
+
 
             </div>
          </div><!--/span-->

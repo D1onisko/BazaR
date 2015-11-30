@@ -3,6 +3,7 @@ from django.views.generic import DetailView, TemplateView, ListView
 from django.shortcuts import get_object_or_404, redirect
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger, PaginationMixin
 import mptt
+from annoying.decorators import render_to
 
 from src.apps.catalogue.models import Category, Product
 

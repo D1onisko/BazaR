@@ -6,13 +6,16 @@ from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from django.conf import settings
+from django.shortcuts import get_object_or_404, redirect
 
 from autoslug.settings import slugify as default_slugify
 from autoslug import AutoSlugField
 from PIL import Image
 from sorl.thumbnail import ImageField
 from mptt.models import MPTTModel, TreeForeignKey
+from mptt.managers import TreeManager
 import mptt
 
 
@@ -61,6 +64,9 @@ class Category(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+        level_attr = 'level'
+
+    objects = TreeManager()
 
     def __str__(self):
         return self.name
@@ -68,6 +74,7 @@ class Category(MPTTModel):
     def get_absolute_url(self):
         return reverse('catalogue:category', args=[self.slug])
 
+mptt.register(Category)
 
 @python_2_unicode_compatible
 class Product(models.Model):
@@ -78,9 +85,10 @@ class Product(models.Model):
     user_name = models.ForeignKey(User, related_name='+', to_field=u'username')
     title = models.CharField(_('Product title'), max_length=255)
     slug = AutoSlugField(populate_from='title', slugify=custom_slugify, unique=False)
-    price = models.IntegerField(verbose_name=_('Price'),)
+    price = models.IntegerField(verbose_name=_('Price'), max_length=10)
+    valuta = models.CharField(_('Currency'), max_length=10)
     address = models.CharField(verbose_name=_('Address'), max_length=100)
-    phone = models.IntegerField(verbose_name=_('Phone'),null=True)
+    phone = models.IntegerField(verbose_name=_('Phone'), null=True)
     description = models.TextField(_('Description'), max_length=255)
     image = models.ImageField(verbose_name=_('Image'), upload_to=u'itempics', blank=True, null=True, default= u'images/test.jpg')
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
@@ -98,6 +106,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('catalogue:product_detail', args=[str(self.pk)])
+
 
     objects = models.Manager()
 
